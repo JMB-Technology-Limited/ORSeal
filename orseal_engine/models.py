@@ -99,11 +99,6 @@ class PaymentAccepted(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 
-class PaymentAccepted(models.Model):
-    standard_id = models.CharField(max_length=200)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-
-
 class Language(models.Model):
     standard_id = models.CharField(max_length=200)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
