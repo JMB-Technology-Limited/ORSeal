@@ -14,7 +14,35 @@
     </tr>
     <tr>
         <th>Description</th>
-        <td>{{ organization.description }}</td>
+        <td>{{ organization.description | linebreaksbr }}</td>
+    </tr>
+    <tr>
+        <th>Alternate Name</th>
+        <td>{{ organization.alternate_name }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ organization.email }}</td>
+    </tr>
+    <tr>
+        <th>URL</th>
+        <td>{{ organization.url }}</td>
+    </tr>
+    <tr>
+        <th>Tax Status</th>
+        <td>{{ organization.tax_status }}</td>
+    </tr>
+    <tr>
+        <th>Tax ID</th>
+        <td>{{ organization.tax_id }}</td>
+    </tr>
+    <tr>
+        <th>Year Incorporated</th>
+        <td>{{ organization.year_incorporated }}</td>
+    </tr>
+    <tr>
+        <th>Legal Status</th>
+        <td>{{ organization.legal_status }}</td>
     </tr>
 
 </table>
