@@ -1,0 +1,13 @@
+<h1>{{ project.title }}</h1>
+<h2>Organisations</h2>
+
+{% if organisations %}
+    <ul>
+    {% for organisation in organisations %}
+        <li><a href="#">{{ organisation.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No organisations are available.</p>
+{% endif %}
+
