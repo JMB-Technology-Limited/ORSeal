@@ -7,22 +7,25 @@ class Project(models.Model):
 
 
 class DataOrganization(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     alternate_name = models.TextField(null=True, blank=True)
-    email = models.TextField(null=True, blank=True)
-    url = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
     tax_status = models.TextField(null=True, blank=True)
     tax_id = models.TextField(null=True, blank=True)
     year_incorporated = models.PositiveIntegerField(null=True, blank=True)
     legal_status = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataProgram(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
@@ -30,17 +33,20 @@ class DataProgram(models.Model):
     alternate_name = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataService(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     program = models.ForeignKey(DataProgram, on_delete=models.PROTECT, null=True, blank=True)
     program_data_id = models.UUIDField(null=True, blank=True)
     alternate_name = models.TextField(null=True, blank=True)
-    email = models.TextField(null=True, blank=True)
-    url = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
     status = models.TextField(null=True, blank=True)
     interpretation_services = models.TextField(null=True, blank=True)
     application_process = models.TextField(null=True, blank=True)
@@ -50,9 +56,12 @@ class DataService(models.Model):
     licenses = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataTaxonomy(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.TextField(null=True, blank=True)
     parent = models.ForeignKey("self", on_delete=models.PROTECT, null=True, blank=True)
@@ -61,9 +70,12 @@ class DataTaxonomy(models.Model):
     vocabulary = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataServiceTaxonomy(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -72,9 +84,12 @@ class DataServiceTaxonomy(models.Model):
     taxonomy_detail =  models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataLocation(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.TextField(null=True, blank=True)
     alternate_name = models.TextField(null=True, blank=True)
@@ -86,9 +101,12 @@ class DataLocation(models.Model):
     longitude = models.FloatField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataServiceAtLocation(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -97,10 +115,13 @@ class DataServiceAtLocation(models.Model):
     description = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 
 class DataContact(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
@@ -111,13 +132,16 @@ class DataContact(models.Model):
     name = models.TextField(null=True, blank=True)
     title = models.TextField(null=True, blank=True)
     department = models.TextField(null=True, blank=True)
-    email = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('project', 'data_id',)
 
 
 
 class DataPhone(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     location = models.ForeignKey(DataLocation, on_delete=models.PROTECT, null=True, blank=True)
     location_data_id = models.UUIDField(null=True, blank=True)
@@ -136,9 +160,12 @@ class DataPhone(models.Model):
     description = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataPhysicalAddress(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     location = models.ForeignKey(DataLocation, on_delete=models.PROTECT, null=True, blank=True)
     location_data_id = models.UUIDField(null=True, blank=True)
@@ -150,9 +177,12 @@ class DataPhysicalAddress(models.Model):
     postal_code = models.TextField(null=True, blank=True)
     country = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('project', 'data_id',)
 
 class DataPostalAddress(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     location = models.ForeignKey(DataLocation, on_delete=models.PROTECT, null=True, blank=True)
     location_data_id = models.UUIDField(null=True, blank=True)
@@ -165,8 +195,11 @@ class DataPostalAddress(models.Model):
     country = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 class DataRegularSchedule(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -179,9 +212,12 @@ class DataRegularSchedule(models.Model):
     closes_at = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataHolidaySchedule(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -196,9 +232,12 @@ class DataHolidaySchedule(models.Model):
     end_date = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataFunding(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
@@ -207,18 +246,24 @@ class DataFunding(models.Model):
     source = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataEligibility(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
     eligibility = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataServiceArea(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -226,27 +271,36 @@ class DataServiceArea(models.Model):
     description = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataRequiredDocument(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
     document = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataPaymentAccepted(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
     payment = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataLanguage(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -255,13 +309,19 @@ class DataLanguage(models.Model):
     language = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ('project', 'data_id',)
+
 
 class DataAccessibilityForDisabilities(models.Model):
-    data_id = models.UUIDField(null=True, blank=True, unique=True)
+    data_id = models.UUIDField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     location = models.ForeignKey(DataLocation, on_delete=models.PROTECT, null=True, blank=True)
     location_data_id = models.UUIDField(null=True, blank=True)
     accessibility = models.TextField(null=True, blank=True)
     details = models.TextField(null=True, blank=True)
     other_data = JSONField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('project', 'data_id',)
 

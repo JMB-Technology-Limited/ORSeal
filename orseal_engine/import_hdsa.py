@@ -21,14 +21,23 @@ class ImportHSDA:
             organization = DataOrganization()
             organization.project = project
             organization.data_id = data["id"]
-            organization.name = data["name"]
-            organization.alternate_name = data["alternate_name"]
-            organization.description = data["description"]
-            organization.email = data["email"]
-            organization.url = data["url"]
-            organization.tax_status = data["tax_status"]
-            organization.tax_id = data["tax_id"]
-            organization.year_incorporated = data["year_incorporated"]
-            organization.legal_status = data["legal_status"]
+            if data["name"]:
+                organization.name = data["name"]
+            if data["alternate_name"]:
+                organization.alternate_name = data["alternate_name"]
+            if data["description"]:
+                organization.description = data["description"]
+            if data["email"]:
+                organization.email = data["email"]
+            if data["url"]:
+                organization.url = data["url"]
+            if data["tax_status"]:
+                organization.tax_status = data["tax_status"]
+            if data["tax_id"]:
+                organization.tax_id = data["tax_id"]
+            if data["year_incorporated"]:
+                organization.year_incorporated = data["year_incorporated"]
+            if data["legal_status"]:
+                organization.legal_status = data["legal_status"]
             organization.save()
 
