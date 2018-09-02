@@ -26,7 +26,7 @@ def organisation_list(request, slug):
     except Project.DoesNotExist:
         raise Http404("Project does not exist")
 
-    organisations = Organisation.objects.filter(project=project)
+    organisations = DataOrganisation.objects.filter(project=project)
 
     return render(request, 'project/organisations.html', {
         'organisations': organisations,
@@ -42,8 +42,8 @@ def organisation_show(request, slug, id):
         raise Http404("Project does not exist")
 
     try:
-        organisation = Organisation.objects.get(project=project, standard_id=id)
-    except Organisation.DoesNotExist:
+        organisation = DataOrganisation.objects.get(project=project, data_id=id)
+    except DataOrganisation.DoesNotExist:
         raise Http404("Organisation does not exist")
 
     return render(request, 'project/organisation/index.html', {
