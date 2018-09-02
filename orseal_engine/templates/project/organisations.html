@@ -4,7 +4,7 @@
 {% if organisations %}
     <ul>
     {% for organisation in organisations %}
-        <li><a href="#">{{ organisation.name }}</a></li>
+        <li><a href="{% url 'organisation_show' slug=project.slug id=organisation.standard_id %}">{{ organisation.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

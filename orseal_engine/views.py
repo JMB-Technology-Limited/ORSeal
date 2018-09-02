@@ -32,3 +32,21 @@ def organisation_list(request, slug):
         'organisations': organisations,
         'project': project,
     })
+
+
+def organisation_show(request, slug, id):
+
+    try:
+        project = Project.objects.get(slug=slug)
+    except Project.DoesNotExist:
+        raise Http404("Project does not exist")
+
+    try:
+        organisation = Organisation.objects.get(project=project, standard_id=id)
+    except Organisation.DoesNotExist:
+        raise Http404("Organisation does not exist")
+
+    return render(request, 'project/organisation/index.html', {
+        'organisation': organisation,
+        'project': project,
+    })
