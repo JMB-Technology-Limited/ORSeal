@@ -1,0 +1,12 @@
+<h1>Open Referral Seal</h1>
+
+{% if projects %}
+    <ul>
+    {% for project in projects %}
+        <li><a href="{% url 'project' slug=project.slug %}">{{ project.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No projects are available.</p>
+{% endif %}
+

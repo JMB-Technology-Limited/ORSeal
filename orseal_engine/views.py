@@ -3,10 +3,12 @@ from .models import *
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 
 
-
 def index(request):
-    return HttpResponse("Hello, Open Referral Seal.")
+    projects = Project.objects.all()
 
+    return render(request, 'index.html', {
+        'projects': projects,
+    })
 
 def project(request, slug):
     try:
