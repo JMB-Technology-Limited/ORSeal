@@ -1,0 +1,13 @@
+<h1>{{ project.title }}</h1>
+<h2>Organizations</h2>
+
+{% if organizations %}
+    <ul>
+    {% for organization in organizations %}
+        <li><a href="{% url 'organization_show' slug=project.slug id=organization.data_id %}">{{ organization.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No organizations are available.</p>
+{% endif %}
+

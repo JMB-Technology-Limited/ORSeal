@@ -19,22 +19,22 @@ def project(request, slug):
     })
 
 
-def organisation_list(request, slug):
+def organization_list(request, slug):
 
     try:
         project = Project.objects.get(slug=slug)
     except Project.DoesNotExist:
         raise Http404("Project does not exist")
 
-    organisations = DataOrganisation.objects.filter(project=project)
+    organizations = DataOrganization.objects.filter(project=project)
 
-    return render(request, 'project/organisations.html', {
-        'organisations': organisations,
+    return render(request, 'project/organizations.html', {
+        'organizations': organizations,
         'project': project,
     })
 
 
-def organisation_show(request, slug, id):
+def organization_show(request, slug, id):
 
     try:
         project = Project.objects.get(slug=slug)
@@ -42,11 +42,11 @@ def organisation_show(request, slug, id):
         raise Http404("Project does not exist")
 
     try:
-        organisation = DataOrganisation.objects.get(project=project, data_id=id)
-    except DataOrganisation.DoesNotExist:
-        raise Http404("Organisation does not exist")
+        organization = DataOrganization.objects.get(project=project, data_id=id)
+    except DataOrganization.DoesNotExist:
+        raise Http404("Organization does not exist")
 
-    return render(request, 'project/organisation/index.html', {
-        'organisation': organisation,
+    return render(request, 'project/organization/index.html', {
+        'organization': organization,
         'project': project,
     })

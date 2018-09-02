@@ -6,7 +6,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
 
 
-class DataOrganisation(models.Model):
+class DataOrganization(models.Model):
     data_id = models.UUIDField(null=True, blank=True, unique=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.TextField(null=True, blank=True)
@@ -24,7 +24,7 @@ class DataOrganisation(models.Model):
 class DataProgram(models.Model):
     data_id = models.UUIDField(null=True, blank=True, unique=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    organization = models.ForeignKey(DataOrganisation, on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
     name = models.TextField(null=True, blank=True)
     alternate_name = models.TextField(null=True, blank=True)
@@ -79,7 +79,7 @@ class DataLocation(models.Model):
     name = models.TextField(null=True, blank=True)
     alternate_name = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    organization = models.ForeignKey(DataOrganisation, on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
     transportation = models.TextField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
@@ -102,7 +102,7 @@ class DataServiceAtLocation(models.Model):
 class DataContact(models.Model):
     data_id = models.UUIDField(null=True, blank=True, unique=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    organization = models.ForeignKey(DataOrganisation, on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
@@ -123,7 +123,7 @@ class DataPhone(models.Model):
     location_data_id = models.UUIDField(null=True, blank=True)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
-    organization = models.ForeignKey(DataOrganisation, on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
     contact = models.ForeignKey(DataContact, on_delete=models.PROTECT, null=True, blank=True)
     contact_data_id = models.UUIDField(null=True, blank=True)
@@ -200,7 +200,7 @@ class DataHolidaySchedule(models.Model):
 class DataFunding(models.Model):
     data_id = models.UUIDField(null=True, blank=True, unique=True)
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    organization = models.ForeignKey(DataOrganisation, on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey(DataOrganization, on_delete=models.PROTECT, null=True, blank=True)
     organization_data_id = models.UUIDField(null=True, blank=True)
     service = models.ForeignKey(DataService, on_delete=models.PROTECT, null=True, blank=True)
     service_data_id = models.UUIDField(null=True, blank=True)
