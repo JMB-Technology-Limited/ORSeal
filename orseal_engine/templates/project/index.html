@@ -5,7 +5,7 @@
 <ul>
     <li><a href="{% url 'organization_list' slug=project.slug %}">Organization</a></li>
     <li><a href="">Program</a></li>
-    <li><a href="">Service</a></li>
+    <li><a href="{% url 'service_list' slug=project.slug %}">Service</a></li>
     <li><a href="">ServiceTaxonomy</a></li>
     <li><a href="">ServiceAtLocation</a></li>
     <li><a href="">Location</a></li>

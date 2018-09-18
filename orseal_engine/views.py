@@ -52,3 +52,36 @@ def organization_show(request, slug, id):
         'organization': organization,
         'project': project,
     })
+
+
+def service_list(request, slug):
+
+    try:
+        project = Project.objects.get(slug=slug)
+    except Project.DoesNotExist:
+        raise Http404("Project does not exist")
+
+    services = DataService.objects.filter(project=project)
+
+    return render(request, 'project/services.html', {
+        'services': services,
+        'project': project,
+    })
+
+
+def service_show(request, slug, id):
+
+    try:
+        project = Project.objects.get(slug=slug)
+    except Project.DoesNotExist:
+        raise Http404("Project does not exist")
+
+    try:
+        service = DataService.objects.get(project=project, data_id=id)
+    except DataService.DoesNotExist:
+        raise Http404("Service does not exist")
+
+    return render(request, 'project/service/index.html', {
+        'service': service,
+        'project': project,
+    })
